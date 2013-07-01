@@ -10,11 +10,11 @@
   <div>
     <h1>Welcome, <strong>{{me.name}}</strong></h1>
     <p class="tagline">
-      This is your app
-      <a href="{{app.link}}">{{app.name}}</a>
+      This is a app
+      <a href="{{app.link}}">{{app.name}}</a> showing common likes between you and your friends.
     </p>
     <div id="share-app">
-      <p>Share your app:</p>
+      <p>Share this app:</p>
       <ul>
         <li>
           <a href="#" class="facebook-button" id="postToWall" data-url="{{ url }}">
@@ -39,7 +39,7 @@
 
 {% block content %}
 <section class="clearfix" id="samples">
-      <h1>Examples of the Facebook Graph API</h1>
+      <h1>Your frieds with common likes</h1>
       <div class="list">
         <h3>A few of your friends</h3>
         <ul class="friends">{% for friend in friends.data %}
@@ -49,22 +49,6 @@
             {{friend.name}}
           </a>
         </li>{% endfor %}</ul>
-      </div>
-      <div class="list inline">
-        <h3>Recent photos</h3>
-        <ul class="photos">
-          {% for photo in photos.data %}
-            {% if loop.index0%4 == 0 %}
-          <li class="first-column" style="background-image: url({{photo.picture}})">
-            {% else %}
-          <li style="background-image: url({{photo.picture}})">
-            {% endif %}
-            <a href="#" onclick="window.open('http://www.facebook.com/{{photo.id}}')">
-              {{photo.name}}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
       </div>
       <div class="list">
         <h3>Things you like</h3>
@@ -76,15 +60,5 @@
           </a>
         </li>{% endfor %}</ul>
       </div>
-      <div class="list">
-        <h3>Friends using this app</h3>
-        <ul class="friends">{% for friend in app_friends %}
-        <li>
-          <a href="#" onclick="window.open('http://www.facebook.com/{{friend.uid}}')">
-            <img src="https://graph.facebook.com/{{friend.uid}}/picture?type=square" alt="{{friend.name}}">
-            {{friend.name}}
-            </a>
-        </li>{% endfor %}</ul>
-      </div>
-    </section>
+</section>
 {% endblock%}
