@@ -10,8 +10,7 @@
   <div>
     <h1>Welcome, <strong>{{me.name}}</strong></h1>
     <p class="tagline">
-      This is a app
-      <a href="{{app.link}}">{{app.name}}</a> showing common likes between you and your friends.
+      This is a app showing common likes between you and your friends.
     </p>
     <div id="share-app">
       <p>Share this app:</p>
@@ -39,26 +38,20 @@
 
 {% block content %}
 <section class="clearfix" id="samples">
-      <h1>Your frieds with common likes</h1>
-      <div class="list">
-        <h3>A few of your friends</h3>
-        <ul class="friends">{% for friend in friends.data %}
-        <li>
-          <a href="#" onclick="window.open('http://www.facebook.com/{{friend.id}}')">
-            <img src="https://graph.facebook.com/{{friend.id}}/picture" alt="{{friend.name}}">
-            {{friend.name}}
-          </a>
-        </li>{% endfor %}</ul>
-      </div>
-      <div class="list">
-        <h3>Things you like</h3>
-        <ul class="things">{% for like in likes.data %}
-        <li>
-          <a href="#" onclick="window.open('http://www.facebook.com/{{like.id}}')">
-            <img src="https://graph.facebook.com/{{like.id}}/picture?type=square" alt="{{like.name}}">
-            {{like.name}}
-          </a>
-        </li>{% endfor %}</ul>
-      </div>
+      <h1>Your friends with common likes</h1>
+      <div style="text-align:center"><span id="hint">Starting...</span></div>
 </section>
+<section class="clearfix" id="guides">
+</section>
+
+{% raw %}
+<script id="tpl" type="text/x-handlebars-template">
+<div style="display:none;" class="clearfix">
+  <img style="float:left;margin: 0px 10px 10px 0px" src="https://graph.facebook.com/{{friend.id}}/picture" alt="{{friend.name}}">
+  <a href="#" onclick="window.open('http://www.facebook.com/{{friend.id}}')">
+    {{friend.name}}
+  </a> has {{ likes_count }} common likes with you
+</div>
+</script>
+{% endraw %}
 {% endblock%}
