@@ -16,7 +16,7 @@ var APP = (function(){
 
   function process_friend_likes(friend, response) {
     $("#hint").html("Processing " + processed_friend_count + "/" + my_friends.length + " friends");
-    console.log(response);
+
     var common_likes = [];
     for (var key in response.data) {
       var like = response.data[key];
@@ -24,7 +24,7 @@ var APP = (function(){
         common_likes.push(like.id);
       };
     }
-    console.log("show_friend_likes: " + processed_friend_count);
+    console.log("common: " + common_likes.length);
     if(common_likes.length > 0) {
       show_common_likes(friend, common_likes);
     }
@@ -75,7 +75,7 @@ var APP = (function(){
         load_my_likes(response);
       });
 
-      FB.api('/me/friends', {limit: 10}, function(response) {
+      FB.api('/me/friends', {limit: 100}, function(response) {
         load_my_friends(response);
       });
     }
