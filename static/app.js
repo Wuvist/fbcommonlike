@@ -9,8 +9,8 @@ var APP = (function(){
   }
 
   function show_common_likes(friend, likes) {
-    var context = {friend: friend, likes_count: likes.length}
-    var html    = tpl(context);
+    var context = {friend: friend, common_likes_count: likes.length, common_likes: likes}
+    var html = tpl(context);
     $(html).prependTo("#guides").slideDown();
   }
 
@@ -21,7 +21,7 @@ var APP = (function(){
     for (var key in response.data) {
       var like = response.data[key];
       if(my_likes[like.id]) {
-        common_likes.push(like.id);
+        common_likes.push(like);
       };
     }
     console.log("common: " + common_likes.length);

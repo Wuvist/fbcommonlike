@@ -41,16 +41,21 @@
       <h1>Your friends with common likes</h1>
       <div style="text-align:center"><span id="hint">Starting...</span></div>
 </section>
-<section class="clearfix" id="guides">
+<section class="clearfix" id="guides" style="max-height:300px;overflow:scroll">
 </section>
 
 {% raw %}
 <script id="tpl" type="text/x-handlebars-template">
-<div style="display:none;" class="clearfix">
-  <img style="float:left;margin: 0px 10px 10px 0px" src="https://graph.facebook.com/{{friend.id}}/picture" alt="{{friend.name}}">
+<div style="display:none;margin-bottom:10px" class="clearfix" id="friend_{{friend.id}}">
+  <img style="width:50px;height:50px;float:left;margin: 0px 10px 10px 0px" src="https://graph.facebook.com/{{friend.id}}/picture" alt="{{friend.name}}">
   <a href="#" onclick="window.open('http://www.facebook.com/{{friend.id}}')">
     {{friend.name}}
-  </a> has {{ likes_count }} common likes with you
+  </a> Likes in Common: {{ common_likes_count }} 
+  <div style="margin-top:10px" class="common_like_list">
+    {{#common_likes}}<a href="http://www.facebook.com/{{id}}" target="_blank" title="{{name}}" style="font-size:11px">{{name}}</a><span>, </span>{{/common_likes}}
+  </div>
+</div>
+</script>
 </div>
 </script>
 {% endraw %}
