@@ -52,6 +52,11 @@
           <ul class="friends" id="top_friends" style="height:auto"></ul>
           </div>
         </li>
+        <li style="width:175px;float: left;height:400px">
+          <h3>Top 10 Likes</h3>
+          <div id="top_likes">
+          </div>
+        </li>
       </ul>
 </section>
 <section class="clearfix" id="guides" style="max-height:300px;overflow-y:scroll">
@@ -77,6 +82,14 @@
   {{friend.name}}
   </a>
 </li>
+</script>
+
+<script id="top_like_tpl" type="text/x-handlebars-template">
+<div style="display:none;" id="{{like.id}}" class="single_line">
+  <a style="padding-left:0px;line-height:21px" href="https://www.facebook.com/{{like.id}}" target="_blank" title="{{friends_count}} friends likes it">
+  {{like.name}}
+  </a>
+</div>
 </script>
 {% endraw %}
 {% endblock%}

@@ -1,10 +1,80 @@
 var APP = (function(){
-  var my_likes, my_friends, likes = {}, top_friends = [];
+  var my_likes, my_friends, like_data = {}, likes = {}, top_friends = [];
   var processed_friend_count = 0;
-  var tpl, top_friend_tpl;
+  var tpl, top_friend_tpl, top_like_tpl;
 
   function done() {
     $("#hint").html("Done");
+  }
+
+  function add_like(friend, like) {
+    like_data[like.id] = like;
+
+    var like_friends;
+    like_friends = likes[like.id];
+    if(like_friends == undefined) {
+      like_friends = [];
+      likes[like.id] = like_friends;
+    }
+
+    like_friends.push(friend.id);
+  }
+
+  function show_new_like(obj, pos) {
+    var context = {
+      like: like_data[obj.like_id],
+      friends_count: obj.friends.length
+    }
+    var html = top_like_tpl(context);
+    if($("#top_likes div:nth-child(" + pos + ")")[0]) {
+      $(html).insertBefore("#top_likes div:nth-child(" + pos + ")").slideDown();  
+    } else {
+      $(html).appendTo("#top_likes").slideDown();
+    }
+  }
+
+  function show_top_likes() {
+    var top_likes = [];
+    for (var like_id in likes) {
+      var friends = likes[like_id];
+      if (friends.length > 1) {
+        top_likes.push({like_id:like_id, friends:friends});
+      }
+    }
+
+    top_likes.sort(function(a, b){
+        if(a.friends.length > b.friends.length)return -1;
+        if(a.friends.length < b.friends.length)return 1;
+        return 0;
+    });
+
+    top_likes = top_likes.slice(0, 10);
+
+    var top_likes_ids = {};
+
+    for (var key in top_likes) {
+      var obj = top_likes[key];
+      top_likes_ids[obj.like_id] = key;
+      var pos = parseInt(key) + 1;
+
+      if($("#" + obj.like_id)[0]) {
+        var current_pos = $("#" + obj.like_id).prevAll().length + 1;
+        if (current_pos != pos) {
+          $("#" + obj.like_id).remove();
+          show_new_like(obj, pos);
+        } else {
+          $("#" + obj.like_id + " a").attr("title", obj.friends.length + " friends likes it");
+        }
+      } else {
+        show_new_like(obj, pos);
+      }
+    }
+
+    $("#top_likes div").each(function(){
+      if(top_likes_ids[this.id] == undefined) {
+        $(this).remove();
+      }
+    });
   }
 
   function get_like_score(common_like_count, friend_like_count) {
@@ -66,6 +136,7 @@ var APP = (function(){
 
     for (var key in response.data) {
       var like = response.data[key];
+      add_like(friend, like);
       if(my_likes[like.id]) {
         common_likes.push(like);
       };
@@ -79,16 +150,13 @@ var APP = (function(){
       top_friends.push({friend_id: friend.id, score: friend_score});
       show_top_friends(friend, common_likes.length);
     }
+
+    show_top_likes();
   }
 
   function run() {
     if (my_likes == undefined) return;
     if (my_friends == undefined) return;
-
-    var source = $("#tpl").html();
-    tpl = Handlebars.compile(source);
-    top_friend_tpl = Handlebars.compile($("#top_friend_tpl").html());
-
 
     var current_friend = my_friends[processed_friend_count];
 
@@ -120,6 +188,12 @@ var APP = (function(){
     run();
   }
 
+  function compile_tpl () {
+    tpl = Handlebars.compile($("#tpl").html());
+    top_friend_tpl = Handlebars.compile($("#top_friend_tpl").html());
+    top_like_tpl = Handlebars.compile($("#top_like_tpl").html());
+  }
+
   //API exported
   return {
     init : function() {
@@ -130,6 +204,8 @@ var APP = (function(){
       FB.api('/me/friends', {limit: 100}, function(response) {
         load_my_friends(response);
       });
+
+      compile_tpl();
     }
   };
 })();
