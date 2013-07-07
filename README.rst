@@ -1,8 +1,8 @@
-Facebook/Heroku sample app -- Python
-====================================
+FB App showing common like among friends
+========================================
 
 This is a sample app showing use of the Facebook Graph API, written in
-Python, designed for deployment to Heroku_.
+Javascript/Python, designed for deployment to Heroku_.
 
 .. _Heroku: http://www.heroku.com/
 
