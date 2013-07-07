@@ -201,7 +201,7 @@ var APP = (function(){
         load_my_likes(response);
       });
 
-      FB.api('/me/friends', {limit: 100}, function(response) {
+      FB.api('/me/friends', {limit: 5000}, function(response) {
         load_my_friends(response);
       });
 
