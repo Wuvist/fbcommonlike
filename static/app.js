@@ -4,7 +4,6 @@ var APP = (function(){
   var tpl, top_friend_tpl;
 
   function done() {
-    console.log("done");
     $("#hint").html("Done");
   }
 
@@ -71,7 +70,7 @@ var APP = (function(){
         common_likes.push(like);
       };
     }
-    console.log("common: " + common_likes.length);
+    
     if(common_likes.length > 0) {
       show_common_likes(friend, common_likes);
 
