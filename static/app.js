@@ -27,14 +27,6 @@ var APP = (function(){
       top_friends_ids[obj.friend_id] = key;
     }
     
-    $("#top_friends li").each(function(){
-      if(top_friends_ids[this.id] == undefined) {
-        $(this).slideUp("fast", function(){
-          $(this).remove();
-        })
-      }
-    });
-    
     var new_friend_pos = top_friends_ids[friend.id];
     if (new_friend_pos != undefined) {
       new_friend_pos = parseInt(new_friend_pos) + 1;
@@ -51,6 +43,14 @@ var APP = (function(){
         $(html).appendTo("#top_friends").slideDown();  
       }
     }
+
+    $("#top_friends li").each(function(){
+      if(top_friends_ids[this.id] == undefined) {
+        $(this).slideUp("fast", function(){
+          $(this).remove();
+        })
+      }
+    });
   }
 
   function show_common_likes(friend, likes) {
