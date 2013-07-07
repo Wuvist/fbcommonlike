@@ -9,6 +9,7 @@
 
   <div>
     <h1>Welcome, <strong>{{me.name}}</strong></h1>
+    <input type="hidden" id="username" value="{{me.username}}" />
     <p class="tagline">
       This is a app showing common likes between you and your friends.
     </p>
@@ -38,8 +39,20 @@
 
 {% block content %}
 <section class="clearfix" id="samples">
-      <h1>Your friends with common likes</h1>
-      <div style="text-align:center"><span id="hint">Starting...</span></div>
+      <h1>Likes in Common</h1>
+      <ul style="background:none;height:240px">
+        <li style="width:175px;float: left;margin-right:80px;height:150px">
+          <h3>Status</h3>
+          <br />
+          <div style="text-align:center"><span id="hint" style="font-size:20px">Starting...</span></div>
+        </li>
+        <li style="width:175px;float:left;margin-right:80px;height:270px">
+          <h3>Top Friends</h3>
+          <div class="list">
+          <ul class="friends" id="top_friends" style="height:auto"></ul>
+          </div>
+        </li>
+      </ul>
 </section>
 <section class="clearfix" id="guides" style="max-height:300px;overflow:scroll">
 </section>
@@ -56,7 +69,14 @@
   </div>
 </div>
 </script>
-</div>
+
+<script id="top_friend_tpl" type="text/x-handlebars-template">
+<li style="display:none;" id="{{friend.id}}">
+  <a href="https://www.facebook.com/{{username}}/favorites?and={{friend.id}}" target="_blank" title="{{friend.name}}, {{common_likes_count}} likes in common">
+  <img src="https://graph.facebook.com/{{friend.id}}/picture?type=square">
+  {{friend.name}}
+  </a>
+</li>
 </script>
 {% endraw %}
 {% endblock%}
